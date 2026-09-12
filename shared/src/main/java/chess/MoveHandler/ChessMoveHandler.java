@@ -6,6 +6,7 @@ import chess.ChessPosition;
 import chess.ChessMove;
 
 import java.util.HashSet;
+import java.util.Objects;
 
 
 public class ChessMoveHandler {
@@ -42,5 +43,21 @@ public class ChessMoveHandler {
 
     static boolean newBoardPutsKingInCheck(ChessBoard board){
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessMoveHandler that = (ChessMoveHandler) o;
+        return Objects.equals(position, that.position) && Objects.equals(board, that.board) && Objects.equals(piece, that.piece);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, board, piece);
     }
 }
