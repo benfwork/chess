@@ -66,6 +66,7 @@ public class ChessBoard {
      */
     public void resetBoard() {
         /*  row */
+        squares = new ChessPiece[8][8];
         for (int row = 1; row < 9; row ++){
             for (int col = 1; col < 9; col++){
                 ChessPiece.PieceType chessPieceType = getStartingPieceType(row, col);
