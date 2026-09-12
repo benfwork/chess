@@ -19,7 +19,7 @@ public class ChessMoveHandler {
         this.piece = piece;
     }
 
-    HashSet<ChessMove> getMoves(){
+    public HashSet<ChessMove> getMoves(){
         return null;
     }
 
@@ -31,7 +31,16 @@ public class ChessMoveHandler {
 
     boolean isNullOrOtherTeam(ChessPosition position){
         boolean isNull = (board.getPiece(position) == null);
-        boolean isOtherTeam = (board.getPiece(position).getTeamColor() != piece.getTeamColor());
-        return isNull | isOtherTeam;
+        if (isNull) {
+            return isNull;
+        }
+        else {
+            boolean isOtherTeam = (board.getPiece(position).getTeamColor() != piece.getTeamColor());
+            return isOtherTeam;
+        }
+    }
+
+    static boolean newBoardPutsKingInCheck(ChessBoard board){
+        return false;
     }
 }

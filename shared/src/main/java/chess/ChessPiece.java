@@ -1,5 +1,10 @@
 package chess;
 
+import chess.MoveHandler.BishopMoveHandler;
+import chess.MoveHandler.ChessMoveHandler;
+import chess.MoveHandler.KingMoveHandler;
+import chess.MoveHandler.RookMoveHandler;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -54,9 +59,14 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         ChessPiece piece = board.getPiece(myPosition);
-        if (piece.getPieceType() == PieceType.BISHOP) {
-            return List.of(new ChessMove(new ChessPosition(5,4), new ChessPosition(1,8), null));
+        if (piece.getPieceType() == PieceType.ROOK){
+            ChessMoveHandler calculator = new RookMoveHandler(myPosition, board, piece);
+            return calculator.getMoves();
         }
-        return List.of();
+        else if (piece.getPieceType() == PieceType.KING){
+            ChessMoveHandler calculator = new KingMoveHandler(myPosition, board, piece);
+            return calculator.getMoves();
+        }
+        return null;
     }
 }
