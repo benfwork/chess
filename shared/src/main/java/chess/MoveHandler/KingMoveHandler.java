@@ -7,8 +7,8 @@ import chess.ChessPosition;
 
 import java.util.HashSet;
 
-public class KingMovesHandler extends ChessMoveHandler{
-    public KingMovesHandler(ChessPosition position, ChessBoard board, ChessPiece piece) {
+public class KingMoveHandler extends ChessMoveHandler{
+    public KingMoveHandler(ChessPosition position, ChessBoard board, ChessPiece piece) {
         super(position, board, piece);
     }
 
