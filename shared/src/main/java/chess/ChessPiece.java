@@ -1,12 +1,10 @@
 package chess;
 
-import chess.MoveHandler.BishopMoveHandler;
-import chess.MoveHandler.ChessMoveHandler;
-import chess.MoveHandler.KingMoveHandler;
-import chess.MoveHandler.RookMoveHandler;
+import chess.moveHandler.ChessMoveHandler;
+import chess.moveHandler.KingMoveHandler;
+import chess.moveHandler.RookMoveHandler;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -68,6 +66,7 @@ public class ChessPiece {
             ChessMoveHandler calculator = new KingMoveHandler(myPosition, board, piece);
             return calculator.getMoves();
         }
+        else if (piece.getPieceType() == )
         return null;
     }
 

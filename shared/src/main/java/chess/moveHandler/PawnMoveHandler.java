@@ -1,10 +1,8 @@
-package chess.MoveHandler;
+package chess.moveHandler;
 
 import chess.ChessBoard;
 import chess.ChessPiece;
 import chess.ChessPosition;
-
-import java.util.HashSet;
 
 public class PawnMoveHandler extends ChessMoveHandler {
 

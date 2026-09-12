@@ -1,11 +1,10 @@
-package chess.MoveHandler;
+package chess.moveHandler;
 
 import chess.ChessBoard;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.ChessMove;
 
-import javax.swing.*;
 import java.util.HashSet;
 import java.util.Objects;
 
