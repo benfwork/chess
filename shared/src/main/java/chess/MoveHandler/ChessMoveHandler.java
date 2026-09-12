@@ -5,6 +5,7 @@ import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.ChessMove;
 
+import javax.swing.*;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -43,6 +44,33 @@ public class ChessMoveHandler {
 
     static boolean newBoardPutsKingInCheck(ChessBoard board){
         return false;
+    }
+
+     public final HashSet<ChessMove> getDirectionMoves(int[][] directions){
+         HashSet<ChessMove> moves = new HashSet<>();
+
+         for (int[] direction : directions){
+             int row = position.getRow() + direction[0];
+             int col = position.getColumn() + direction[1];
+
+             while (isValidSquare(new ChessPosition(row, col))){
+                ChessPosition newSquare = new ChessPosition(row, col);
+                ChessPiece occupant = board.getPiece(newSquare);
+
+                if (occupant == null){
+                    moves.add(new ChessMove(position, newSquare, null));
+                }
+                else {
+                    if (occupant.getTeamColor() != piece.getTeamColor()) {
+                        moves.add(new ChessMove(position, newSquare, null));
+                    }
+                    break;
+                }
+                 row += direction[0];
+                 col += direction[1];
+             }
+         }
+         return moves;
     }
 
     @Override

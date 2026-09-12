@@ -14,24 +14,9 @@ public class RookMoveHandler extends ChessMoveHandler{
 
     @Override
     public HashSet<ChessMove> getMoves() {
-        int row = position.getRow();
-        int col = position.getColumn();
-
-        HashSet<ChessMove> validMoves = HashSet.newHashSet(14);
-
-        for (int i = -7; i < 8; i++) {
-            /* movement along a column */
-            ChessPosition newPositionCol = new ChessPosition(row, col + i);
-            if (isValidSquare(newPositionCol) && isNullOrOtherTeam(newPositionCol)) {
-                validMoves.add(new ChessMove(position, newPositionCol, null));
-            }
-            /* movement along a row */
-            ChessPosition newPositionRow = new ChessPosition(row - 1, col);
-            if (isValidSquare(newPositionRow) && isNullOrOtherTeam(newPositionRow)) {
-                validMoves.add(new ChessMove(position, newPositionRow, null));
-            }
-        }
-        return validMoves;
+        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        HashSet<ChessMove> directionMoves = getDirectionMoves(directions);
+        return directionMoves;
     }
 
 }
