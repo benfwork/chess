@@ -99,4 +99,19 @@ public class ChessBoard {
     public int hashCode() {
         return 31 * Arrays.deepHashCode(squares);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder boardStr = new StringBuilder();
+        for (int col = 8; col > 0; col--){
+            boardStr.append("|");
+            for (int row = 1; row < 8; row ++){
+                var piece = squares[row-1][col-1];
+                boardStr.append(piece != null ? piece.toString() : " ");
+                boardStr.append("|");
+            }
+            boardStr.append("\n");
+        }
+        return boardStr.toString();
+    }
 }

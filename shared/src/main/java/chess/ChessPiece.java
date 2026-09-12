@@ -51,22 +51,6 @@ public class ChessPiece {
         return type;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) return true;
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ChessPiece that = (ChessPiece) o;
-        return pieceColor == that.pieceColor && type == that.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return 31 * Objects.hash(pieceColor, type);
-    }
-
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in
@@ -85,5 +69,45 @@ public class ChessPiece {
             return calculator.getMoves();
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessPiece that = (ChessPiece) o;
+        return pieceColor == that.pieceColor && type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * Objects.hash(pieceColor, type);
+    }
+
+    @Override
+    public String toString() {
+        boolean pieceIsWhite =  (pieceColor == ChessGame.TeamColor.WHITE);
+        if (type == PieceType.KING){
+            return pieceIsWhite ? "K" : "k";
+        }
+        else if (type == PieceType.BISHOP){
+            return pieceIsWhite ? "B" : "b";
+        }
+        else if (type == PieceType.KNIGHT){
+            return pieceIsWhite ? "N" : "n";
+        }
+        else if (type == PieceType.QUEEN){
+            return pieceIsWhite ? "Q" : "w";
+        }
+        else if (type == PieceType.PAWN){
+            return pieceIsWhite ? "P" : "p";
+        }
+        else if (type == PieceType.ROOK){
+            return pieceIsWhite ? "R" : "r";
+        }
+        return " ";
     }
 }
