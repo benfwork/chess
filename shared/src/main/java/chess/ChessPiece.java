@@ -76,6 +76,10 @@ public class ChessPiece {
             ChessMoveHandler calculator = new PawnMoveHandler(myPosition, board, piece);
             return calculator.getMoves();
         }
+        else if (piece.getPieceType() == PieceType.KNIGHT){
+            ChessMoveHandler calculator = new KnightMoveHandler(myPosition, board, piece);
+            return calculator.getMoves();
+        }
         return null;
     }
 
