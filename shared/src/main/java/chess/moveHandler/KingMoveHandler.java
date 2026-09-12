@@ -14,22 +14,7 @@ public class KingMoveHandler extends ChessMoveHandler{
 
     @Override
     public HashSet<ChessMove> getMoves() {
-        int row = position.getRow();
-        int col = position.getColumn();
-
-        HashSet<ChessMove> validMoves = HashSet.newHashSet(8);
-
         int[][] relativeMoves = {{-1, 1}, {0, 1}, {1, 1}, {-1, 0}, {1, 0}, {-1, -1}, {0, -1}, {1, -1}};
-        for (int[] move : relativeMoves) {
-            int x = move[0];
-            int y = move[1];
-            int newRow = row + x;
-            int newCol = col + y;
-            ChessPosition newPosition = new ChessPosition(newRow, newCol);
-            if (isValidSquare(newPosition) && isNullOrOtherTeam(newPosition)) {
-                validMoves.add(new ChessMove(position, newPosition, null));
-            }
-        }
-        return validMoves;
+        return getRelativeMoves(relativeMoves);
     }
 }

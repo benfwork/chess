@@ -72,6 +72,24 @@ public class ChessMoveHandler {
          return moves;
     }
 
+    public final HashSet<ChessMove> getRelativeMoves(int[][] relativeMoves){
+        HashSet<ChessMove> validMoves = new HashSet<>();
+
+        for (int[] move : relativeMoves) {
+            int row = position.getRow();
+            int col = position.getColumn();
+            int x = move[0];
+            int y = move[1];
+            int newRow = row + x;
+            int newCol = col + y;
+            ChessPosition newPosition = new ChessPosition(newRow, newCol);
+            if (isValidSquare(newPosition) && isNullOrOtherTeam(newPosition)) {
+                validMoves.add(new ChessMove(position, newPosition, null));
+            }
+        }
+        return validMoves;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
