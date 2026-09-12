@@ -75,7 +75,7 @@ public class ChessBoard {
                 ChessPiece.PieceType chessPieceType = getStartingPieceType(row, col);
                 /* do not attempt to add a piece where there shouldn't be one */
                 if (chessPieceType != null){
-                    ChessGame.TeamColor teamColor = col < 5 ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
+                    ChessGame.TeamColor teamColor = row < 5 ? ChessGame.TeamColor.WHITE : ChessGame.TeamColor.BLACK;
                     ChessPosition chessPosition = new ChessPosition(row, col);
                     ChessPiece newPiece = new ChessPiece(teamColor, chessPieceType);
                     addPiece(chessPosition, newPiece);
