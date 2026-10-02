@@ -10,24 +10,6 @@ public class PawnMoveHandler extends ChessMoveHandler {
         super(position, board, piece);
     }
 
-    public final HashSet<ChessMove> checkCornerKills(int[][] relativeMoves){
-        HashSet<ChessMove> validMoves = new HashSet<>();
-
-        for (int[] move : relativeMoves) {
-            int row = position.getRow();
-            int col = position.getColumn();
-            int x = move[0];
-            int y = move[1];
-            int newRow = row + x;
-            int newCol = col + y;
-            ChessPosition newPosition = new ChessPosition(newRow, newCol);
-            if (isValidSquare(newPosition) && isNullOrOtherTeam(newPosition)) {
-                validMoves.add(new ChessMove(position, newPosition, null));
-            }
-        }
-        return validMoves;
-    }
-
     public final HashSet<ChessMove> addAllPromoPieces(ChessPosition startPos, ChessPosition endPos){
         HashSet<ChessMove> moves = new HashSet<>();
         moves.add(new ChessMove(startPos, endPos, ChessPiece.PieceType.ROOK));

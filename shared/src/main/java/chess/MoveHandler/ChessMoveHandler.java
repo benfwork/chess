@@ -41,10 +41,6 @@ public class ChessMoveHandler {
         }
     }
 
-    static boolean newBoardPutsKingInCheck(ChessBoard board){
-        return false;
-    }
-
      public final HashSet<ChessMove> getDirectionMoves(int[][] directions){
          HashSet<ChessMove> moves = new HashSet<>();
 
