@@ -53,7 +53,17 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = this.board.getPiece(startPosition);
+        Collection<ChessMove> validMoves = piece.pieceMoves(this.board, startPosition); // valid moves before considering checkmate
 
+        for (var move : validMoves){
+            ChessPiece endPiece = board.getPiece(move.getEndPosition());
+            this.board.removePiece(startPosition); // remove piece from start
+            this.board.addPiece(move.getEndPosition(), piece); // move piece to new place
+            if (isInCheck(piece.getTeamColor())){
+                validMoves
+            }
+        }
+;
         throw new RuntimeException("not implemented");
     }
 
@@ -64,7 +74,9 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        throw new RuntimeException("Not implemented");
+        // removes the piece from old square
+
+        // adds it to new square
     }
 
     /**
