@@ -82,6 +82,21 @@ public class ChessGame {
         // adds it to new square
     }
 
+    public ChessPosition findKingPos(TeamColor color){
+        for (int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
+                ChessPiece piece = board.getPiece(new ChessPosition(row, col));
+                if (piece == null){
+                    continue;
+                }
+                if (piece.getTeamColor() == color && piece.getPieceType() == ChessPiece.PieceType.KING){
+                    return(new ChessPosition(row, col));
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * Determines if the given team is in check
      *
@@ -90,20 +105,12 @@ public class ChessGame {
      */
     public boolean isInCheck(TeamColor teamColor) {
         // find kings position
-        ChessPosition kingPosition = null;
+        ChessPosition kingPos = findKingPos(teamColor);
 
-        for (int row = 1; row < 9 && kingPosition == null; row++){
-            for (int col = 1; col < 9 && kingPosition == null; col++){
-                ChessPiece piece = board.getPiece(new ChessPosition(row, col));
-                if (piece == null){
-                    continue;
-                }
-                if (piece.getTeamColor() == teamColor && piece.getPieceType() == ChessPiece.PieceType.KING){
-                    kingPosition = new ChessPosition(row, col);
-                }
-            }
-        }
 
+
+
+        return false;
 
     }
 
