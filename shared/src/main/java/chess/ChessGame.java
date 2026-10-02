@@ -107,11 +107,22 @@ public class ChessGame {
         // find kings position
         ChessPosition kingPos = findKingPos(teamColor);
 
-
-
+        for (int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
+                ChessPosition newPos = new ChessPosition(row, col);
+                ChessPiece newPiece = board.getPiece(newPos);
+                if (newPiece != null && newPiece.getTeamColor() != teamColor) {
+                    var newMoves = newPiece.pieceMoves(board, newPos);
+                    for (var move : newMoves){
+                        if (move.getEndPosition() == kingPos){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
 
         return false;
-
     }
 
     /**
