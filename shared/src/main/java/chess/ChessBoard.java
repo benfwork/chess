@@ -11,9 +11,13 @@ import java.util.Objects;
  */
 public class ChessBoard {
 
-    ChessPiece[][] squares = new ChessPiece[8][8];
+    private ChessPiece[][] squares = new ChessPiece[8][8];
     public ChessBoard() {
-        
+
+    }
+
+    public ChessBoard(ChessBoard other){
+        this.squares = Arrays.copyOf(other.squares, other.squares.length);
     }
 
     /**
