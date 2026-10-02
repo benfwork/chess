@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,7 +56,7 @@ public class ChessGame {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
         Collection<ChessMove> startingMoves = piece.pieceMoves(board, startPosition); // valid moves before considering checkmate
-        Collection<ChessMove> filteredMoves = List.of();
+        HashSet<ChessMove> filteredMoves = new HashSet<>(startingMoves.size());
 
         for (var move : startingMoves){
             ChessPiece endPiece = board.getPiece(move.getEndPosition());
