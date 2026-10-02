@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -53,21 +54,22 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
-        Collection<ChessMove> validMoves = piece.pieceMoves(board, startPosition); // valid moves before considering checkmate
+        Collection<ChessMove> startingMoves = piece.pieceMoves(board, startPosition); // valid moves before considering checkmate
+        Collection<ChessMove> filteredMoves = List.of();
 
-        for (var move : validMoves){
+        for (var move : startingMoves){
             ChessPiece endPiece = board.getPiece(move.getEndPosition());
             board.removePiece(startPosition); // remove piece from start
             board.addPiece(move.getEndPosition(), piece); // move piece to new place
-            if (isInCheck(piece.getTeamColor())){
-                validMoves.remove(move);
+            if (!isInCheck(piece.getTeamColor())){
+                filteredMoves.add(move);
             }
             // reset board
             board.addPiece(startPosition, piece);
             board.addPiece(move.getEndPosition(), endPiece);
         }
 
-        return validMoves;
+        return filteredMoves;
     }
 
     /**
