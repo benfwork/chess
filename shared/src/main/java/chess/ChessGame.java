@@ -138,6 +138,22 @@ public class ChessGame {
         return false;
     }
 
+    private boolean hasLegalMoves(TeamColor teamColor) {
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                ChessPosition position = new ChessPosition(row, col);
+                ChessPiece piece = board.getPiece(position);
+
+                if (piece != null && piece.getTeamColor() == teamColor) {
+                    if (!validMoves(position).isEmpty()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Determines if the given team is in checkmate
      *
@@ -145,8 +161,8 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        // if there's no valid moves and you're in check, it's checkmate;
-        return isInCheck(teamColor) && isInStalemate(teamColor);
+        // if there's no legal moves and the team is in check, it's checkmate
+        return isInCheck(teamColor) && !hasLegalMoves(teamColor);
     }
 
     /**
@@ -157,20 +173,8 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        for (int row = 1; row < 9; row++){
-            for (int col = 1; col < 9; col++){
-                ChessPosition newPos = new ChessPosition(row, col);
-                ChessPiece newPiece = board.getPiece(newPos);
-
-                if (newPiece != null && newPiece.getTeamColor() == teamColor){
-                    // if there's any valid move on your team, you're not in stalemate
-                    if (validMoves(newPos) != null && !validMoves(newPos).isEmpty()){
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+        // if you're not in check and there's no legal move, then you're in stalemate
+        return !isInCheck(teamColor) && !hasLegalMoves(teamColor);
     }
 
     /**
