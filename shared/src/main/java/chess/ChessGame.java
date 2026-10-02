@@ -52,19 +52,22 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        ChessPiece piece = this.board.getPiece(startPosition);
-        Collection<ChessMove> validMoves = piece.pieceMoves(this.board, startPosition); // valid moves before considering checkmate
+        ChessPiece piece = board.getPiece(startPosition);
+        Collection<ChessMove> validMoves = piece.pieceMoves(board, startPosition); // valid moves before considering checkmate
 
         for (var move : validMoves){
             ChessPiece endPiece = board.getPiece(move.getEndPosition());
-            this.board.removePiece(startPosition); // remove piece from start
-            this.board.addPiece(move.getEndPosition(), piece); // move piece to new place
+            board.removePiece(startPosition); // remove piece from start
+            board.addPiece(move.getEndPosition(), piece); // move piece to new place
             if (isInCheck(piece.getTeamColor())){
-                validMoves
+                validMoves.remove(move);
             }
+            // reset board
+            board.addPiece(startPosition, piece);
+            board.addPiece(move.getEndPosition(), endPiece);
         }
-;
-        throw new RuntimeException("not implemented");
+
+        return validMoves;
     }
 
     /**
@@ -86,7 +89,22 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        // find kings position
+        ChessPosition kingPosition = null;
+
+        for (int row = 1; row < 9 && kingPosition == null; row++){
+            for (int col = 1; col < 9 && kingPosition == null; col++){
+                ChessPiece piece = board.getPiece(new ChessPosition(row, col));
+                if (piece == null){
+                    continue;
+                }
+                if (piece.getTeamColor() == teamColor && piece.getPieceType() == ChessPiece.PieceType.KING){
+                    kingPosition = new ChessPosition(row, col);
+                }
+            }
+        }
+
+
     }
 
     /**
