@@ -55,6 +55,9 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
+        if (piece == null){ // if the starting piece is empty, return an empty moves collection
+            return new HashSet<>();
+        }
         Collection<ChessMove> startingMoves = piece.pieceMoves(board, startPosition); // valid moves before considering checkmate
         HashSet<ChessMove> filteredMoves = new HashSet<>(startingMoves.size());
 
@@ -80,7 +83,7 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        boolean moveIsValid = validMoves(move.getStartPosition()).contains(move);
+        boolean moveIsValid = board.getPiece(move.getStartPosition()) != null && board.getPiece(move.getStartPosition()).getTeamColor() == teamTurn && validMoves(move.getStartPosition()).contains(move);
         // if the move is not valid, throw the exception
         if (!moveIsValid){
             throw new InvalidMoveException("Move is not valid");
@@ -90,6 +93,7 @@ public class ChessGame {
         board.addPiece(move.getEndPosition(), move.getPromotionPiece() == null ? board.getPiece(move.getStartPosition()) : new ChessPiece(teamTurn, move.getPromotionPiece()));
         // removes the piece from old square
         board.removePiece(move.getStartPosition());
+        teamTurn = teamTurn == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE;
     }
 
     public ChessPosition findKingPos(TeamColor color){
