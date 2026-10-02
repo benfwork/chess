@@ -77,9 +77,16 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        // removes the piece from old square
+        boolean moveIsValid = validMoves(move.getStartPosition()).contains(move);
+        // if the move is not valid, throw the exception
+        if (!moveIsValid){
+            throw new InvalidMoveException("Move is not valid");
+        }
 
         // adds it to new square
+        board.addPiece(move.getEndPosition(), move.getPromotionPiece() == null ? board.getPiece(move.getStartPosition()) : new ChessPiece(teamTurn, move.getPromotionPiece()));
+        // removes the piece from old square
+        board.removePiece(move.getStartPosition());
     }
 
     public ChessPosition findKingPos(TeamColor color){
@@ -131,7 +138,8 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        // if there's no valid moves and you're in check, it's checkmate;
+        return isInCheck(teamColor) && isInStalemate(teamColor);
     }
 
     /**
@@ -187,6 +195,6 @@ public class ChessGame {
 
     @Override
     public int hashCode() {
-        return 31 * Objects.hash(getBoard(), getTeamTurn());
+        return Objects.hash(getBoard(), getTeamTurn());
     }
 }
