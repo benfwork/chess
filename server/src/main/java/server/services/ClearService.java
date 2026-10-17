@@ -5,12 +5,12 @@ import server.dataaccess.UserDAO;
 
 public class ClearService {
     private final AuthDAO auth;
-    private final GameDAO game;
+    private final GameDAO games;
     private final UserDAO users;
 
     public ClearService(AuthDAO auth, GameDAO game, UserDAO users) {
         this.auth = auth;
-        this.game = game;
+        this.games = game;
         this.users = users;
     }
 
@@ -18,7 +18,7 @@ public class ClearService {
     public void clearDB(){
         //
         auth.clearAuthData();
-        game.clearGameData();
+        games.clearGameData();
         users.clearUserData();
     }
 }
