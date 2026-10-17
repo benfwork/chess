@@ -4,11 +4,10 @@ import model.GameData;
 
 import java.util.ArrayList;
 
-public class Games {
+public class GameDAO {
     private ArrayList<GameData> games;
 
-    public Games(ArrayList<GameData> games) {
-        this.games = games;
+    public GameDAO() {
     }
 
     public ArrayList<GameData> getGames() {

@@ -1,4 +1,4 @@
 package server.services;
 
-public class Logout {
+public class GamesService {
 }

@@ -4,7 +4,7 @@ import model.UserData;
 
 import java.util.ArrayList;
 
-public class Users {
+public class UserDAO {
     private ArrayList<UserData> users;
 
     public ArrayList<UserData> getUsers() {

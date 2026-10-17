@@ -4,11 +4,10 @@ import model.AuthData;
 
 import java.util.HashSet;
 
-public class Auth {
+public class AuthDAO {
     private HashSet<AuthData> AuthInfo;
 
-    public Auth(HashSet<AuthData> authInfo) {
-        AuthInfo = authInfo;
+    public AuthDAO() {
     }
 
     public void setAuthInfo(HashSet<AuthData> authInfo) {
