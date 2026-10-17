@@ -11,6 +11,42 @@ public class Server {
 
         // Register your endpoints and exception handlers here.
 
+        // clear db
+        javalin.delete("db", ctx -> {
+            System.out.println(ctx.body());
+
+        });
+
+        // register new user
+        javalin.post("user", ctx -> {
+
+        });
+
+        // login
+        javalin.post("session", ctx -> {
+
+        });
+
+        // logout
+        javalin.delete("session", ctx -> {
+
+        });
+
+        // list games
+        javalin.get("game", ctx -> {
+
+        });
+
+        // create game
+        javalin.post("game", ctx -> {
+
+        });
+
+        // logout
+        javalin.put("game", ctx -> {
+
+        });
+
     }
 
     public int run(int desiredPort) {
