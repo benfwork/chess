@@ -1,6 +1,7 @@
 package server;
 
 import com.google.gson.Gson;
+import io.javalin.http.Context;
 import server.services.AuthService;
 import server.services.ClearService;
 import server.services.GamesService;
@@ -16,5 +17,9 @@ public class ApiHandler {
         this.gameService = gameService;
         this.clearService = clearService;
         this.gson = new Gson();
+    }
+
+    public void clear(Context ctx) throws Exception{
+        clearService.clearDB();
     }
 }

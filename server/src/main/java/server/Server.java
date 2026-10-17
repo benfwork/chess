@@ -6,6 +6,7 @@ import server.dataaccess.GameDAO;
 import server.dataaccess.UserDAO;
 import server.services.AuthService;
 import server.services.ClearService;
+import server.services.GamesService;
 import services.ClearApp;
 
 public class Server {
@@ -18,47 +19,15 @@ public class Server {
         GameDAO games = new GameDAO();
 
         AuthService authService = new AuthService(users, auth);
-        ClearService clearService new ClearService(auth, games, users);
+        ClearService clearService = new ClearService(auth, games, users);
+        GamesService gameService = new GamesService(users, games);
+
+        ApiHandler handler = new ApiHandler(authService, gameService, clearService);
 
 
         javalin = Javalin.create(config -> config.staticFiles.add("web"));
-
-        // Register your endpoints and exception handlers here.
-
         // clear db
-        javalin.delete("db", ctx -> {
-            ClearApp.ClearDB();
-        });
-
-        // register new user
-        javalin.post("user", ctx -> {
-
-        });
-
-        // login
-        javalin.post("session", ctx -> {
-
-        });
-
-        // logout
-        javalin.delete("session", ctx -> {
-
-        });
-
-        // list games
-        javalin.get("game", ctx -> {
-
-        });
-
-        // create game
-        javalin.post("game", ctx -> {
-
-        });
-
-        // logout
-        javalin.put("game", ctx -> {
-
-        });
+        javalin.delete("/db", handler::clear);
 
     }
 
