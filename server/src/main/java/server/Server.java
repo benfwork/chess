@@ -7,7 +7,6 @@ import server.dataaccess.UserDAO;
 import server.services.AuthService;
 import server.services.ClearService;
 import server.services.GamesService;
-import services.ClearApp;
 
 public class Server {
 
@@ -20,9 +19,9 @@ public class Server {
 
         AuthService authService = new AuthService(users, auth);
         ClearService clearService = new ClearService(auth, games, users);
-        GamesService gameService = new GamesService(users, games);
+        GamesService gameService = new GamesService(games, users);
 
-        ApiHandler handler = new ApiHandler(authService, gameService, clearService);
+        ApiHandler handler = new ApiHandler(clearService, gameService, authService);
 
 
         javalin = Javalin.create(config -> config.staticFiles.add("web"));
