@@ -15,7 +15,7 @@ public class Auth {
         AuthInfo = authInfo;
     }
 
-    public void ClearAuthInfo(){
+    public void clearAuthData(){
         setAuthInfo(new HashSet<AuthData>());
     }
 }

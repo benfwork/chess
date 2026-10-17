@@ -1,22 +1,24 @@
 package server.services;
 import server.dataaccess.Auth;
-import server.dataaccess.Game;
-import server.dataaccess.User;
+import server.dataaccess.Games;
+import server.dataaccess.Users;
 
 public class ClearApp {
     private final Auth auth;
-    private final Game game;
-    private final User user;
+    private final Games game;
+    private final Users users;
 
-    public ClearApp(Auth auth, Game game, User user) {
+    public ClearApp(Auth auth, Games game, Users users) {
         this.auth = auth;
         this.game = game;
-        this.user = user;
+        this.users = users;
     }
 
 
-    public void ClearDB(){
+    public void clearDB(){
         //
-        auth.ClearAuthInfo();
+        auth.clearAuthData();
+        game.clearGameData();
+        users.clearUserData();
     }
 }
