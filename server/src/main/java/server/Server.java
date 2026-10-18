@@ -28,6 +28,7 @@ public class Server {
                 .delete("/db", handler::clear)
                 .post("/user", handler::register)
                 .post("/session", handler::login)
+                .delete("/session", handler::logout)
                 .exception(BadRequestException.class, (e, ctx) -> {
                     returnException(e, ctx, 400);
                 })

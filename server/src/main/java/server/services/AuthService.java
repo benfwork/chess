@@ -59,4 +59,12 @@ public class AuthService {
 
         return authData;
     }
+
+    public void logout(String authToken){
+        AuthData authData = auth.getAuth(authToken);
+        if (authData == null){
+            throw new UnauthorizedException("Error: unauthorized");
+        }
+        auth.revokeAuth(authToken);
+    }
 }

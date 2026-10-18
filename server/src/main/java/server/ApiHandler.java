@@ -48,4 +48,13 @@ public class ApiHandler {
                 .contentType("application/json")
                 .result(gson.toJson(result));
     }
+
+    public void logout(Context ctx) throws Exception{
+        String authToken = ctx.header("authorization");
+        authService.logout(authToken);
+
+        ctx.status(200)
+                .contentType("application/json")
+                .result("{}");
+    }
 }
