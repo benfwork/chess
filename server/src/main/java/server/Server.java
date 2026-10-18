@@ -27,8 +27,12 @@ public class Server {
         javalin = Javalin.create(config -> config.staticFiles.add("web"))
                 .delete("/db", handler::clear)
                 .post("/user", handler::register)
+                .post("/session", handler::login)
                 .exception(BadRequestException.class, (e, ctx) -> {
                     returnException(e, ctx, 400);
+                })
+                .exception(UnauthorizedException.class, (e, ctx) -> {
+                    returnException(e, ctx, 401);
                 })
                 .exception(AlreadyTakenException.class, (e, ctx) -> {
                     returnException(e, ctx, 403);

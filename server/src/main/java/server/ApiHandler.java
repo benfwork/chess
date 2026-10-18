@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import io.javalin.http.Context;
 import model.AuthData;
+import model.LoginRequest;
 import model.UserData;
 import server.services.*;
 import java.util.Map;
@@ -29,12 +30,22 @@ public class ApiHandler {
     }
 
     public void register(Context ctx) throws Exception {
-            UserData registerRequest = gson.fromJson(ctx.body(), UserData.class);
+        UserData registerRequest = gson.fromJson(ctx.body(), UserData.class);
 
-            AuthData result = authService.register(registerRequest);
+        AuthData result = authService.register(registerRequest);
 
-            ctx.status(200)
-                    .contentType("application/json")
-                    .result(gson.toJson(result));
+        ctx.status(200)
+                .contentType("application/json")
+                .result(gson.toJson(result));
+    }
+
+    public void login(Context ctx) throws Exception{
+        LoginRequest loginRequest = gson.fromJson(ctx.body(), LoginRequest.class);
+
+        AuthData result = authService.login(loginRequest);
+
+        ctx.status(200)
+                .contentType("application/json")
+                .result(gson.toJson(result));
     }
 }
