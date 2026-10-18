@@ -8,6 +8,7 @@ public class AuthDAO {
     private HashSet<AuthData> authInfo;
 
     public AuthDAO() {
+        this.authInfo = new HashSet<AuthData>();
     }
 
     public void addAuth(AuthData authData){

@@ -10,6 +10,7 @@ public class GameDAO {
     private ArrayList<GameData> games;
 
     public GameDAO() {
+        this.games = new ArrayList<GameData>();
     }
 
     public ArrayList<GameData> getGames() {

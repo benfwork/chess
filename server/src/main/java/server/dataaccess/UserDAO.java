@@ -7,6 +7,10 @@ import java.util.HashSet;
 public class UserDAO {
     private HashSet<UserData> users;
 
+    public UserDAO(){
+        this.users = new HashSet<UserData>();
+    }
+
     public UserData getUser(String username) {
         for (var user : users){
             if (user.username().equals(username)){
