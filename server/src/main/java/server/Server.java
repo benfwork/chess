@@ -31,6 +31,7 @@ public class Server {
                 .delete("/session", handler::logout)
                 .post("/game", handler::createGame)
                 .put("/game", handler::joinGame)
+                .get("/game", handler::getGames)
                 .exception(BadRequestException.class, (e, ctx) -> {
                     returnException(e, ctx, 400);
                 })
@@ -54,7 +55,7 @@ public class Server {
     }
 
     private void returnException (Exception e, Context context, int status) {
-        var body = new Gson().toJson(Map.of("message", String.format("Error: %s", e.getMessage()), "success", false));
+        var body = new Gson().toJson(Map.of("message", String.format(e.getMessage()), "success", false));
         context.status(status);
         context.json(body);
     }

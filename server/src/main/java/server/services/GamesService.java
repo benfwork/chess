@@ -3,11 +3,15 @@ package server.services;
 import chess.ChessGame;
 import model.AuthData;
 import model.GameData;
+import model.GameResponse;
 import org.jetbrains.annotations.NotNull;
 import server.dataaccess.AuthDAO;
 import server.dataaccess.DataAccessException;
 import server.dataaccess.GameDAO;
 import server.dataaccess.UserDAO;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GamesService {
     private final GameDAO games;
@@ -75,6 +79,26 @@ public class GamesService {
                 current.gameName(),
                 current.game()
         );
+    }
+
+    public ArrayList<GameResponse> getGames(String authToken){
+        if (!isLoggedIn(authToken)){
+            throw new UnauthorizedException("Error: unauthorized");
+        }
+        var currGames = games.getGames();
+        var gameResponse = new ArrayList<GameResponse>();
+
+        for (var game : currGames){
+            GameResponse newResp = new GameResponse(
+                    game.gameID(),
+                    game.whiteUsername(),
+                    game.blackUsername(),
+                    game.gameName()
+            );
+            gameResponse.add(newResp);
+        }
+
+        return gameResponse;
     }
 
 }

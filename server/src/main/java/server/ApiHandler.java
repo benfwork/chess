@@ -83,4 +83,14 @@ public class ApiHandler {
                 .contentType("application/json")
                 .result("{}");
     }
+
+    public void getGames(Context ctx) {
+        String authToken = ctx.header("authorization");
+
+        var response = Map.of("games", gameService.getGames(authToken));
+
+        ctx.status(200)
+                .contentType("application/json")
+                .result(gson.toJson(response));
+    }
 }
