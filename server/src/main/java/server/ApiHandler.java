@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import io.javalin.http.Context;
 import model.AuthData;
 import model.UserData;
-import server.dataaccess.UserDAO;
-import server.services.AuthService;
-import server.services.ClearService;
-import server.services.GamesService;
+import server.services.*;
+import java.util.Map;
 
 public class ApiHandler {
     private final ClearService clearService;
@@ -30,13 +28,30 @@ public class ApiHandler {
                 .result("{}");
     }
 
-    public void register(Context ctx) throws Exception {
-        UserData registerRequest = gson.fromJson(ctx.body(), UserData.class);
-
-        AuthData result = authService.register(registerRequest);
-
-        ctx.status(200)
+    private void showError(Context ctx, int status, String message) {
+        ctx.status(status)
                 .contentType("application/json")
-                .result(gson.toJson(result));
+                .result(gson.toJson(Map.of("message", message)));
+    }
+
+    public void register(Context ctx) throws Exception {
+        try {
+            UserData registerRequest = gson.fromJson(ctx.body(), UserData.class);
+
+            AuthData result = authService.register(registerRequest);
+
+            ctx.status(200)
+                    .contentType("application/json")
+                    .result(gson.toJson(result));
+        }
+        catch (BadRequestException e){
+            showError(ctx, 400, "Error: bad request");
+        }
+        catch (AlreadyTakenException e){
+            showError(ctx, 403, "Error: already taken");
+        }
+        catch (Exception _){
+            showError(ctx, 500, "Error: ");
+        }
     }
 }

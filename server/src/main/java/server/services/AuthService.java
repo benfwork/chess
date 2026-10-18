@@ -21,7 +21,7 @@ public class AuthService {
         return UUID.randomUUID().toString();
     }
 
-    public AuthData register(UserData request) throws Exception {
+    public AuthData register(UserData request) {
         if (request == null || request.username() == null || request.password() == null || request.email() == null){
             throw new BadRequestException("Error: bad request");
         }

@@ -1,12 +1,12 @@
 package server;
 
+import com.google.gson.Gson;
 import io.javalin.*;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.GameDAO;
-import server.dataaccess.UserDAO;
-import server.services.AuthService;
-import server.services.ClearService;
-import server.services.GamesService;
+import io.javalin.http.Context;
+import server.dataaccess.*;
+import server.services.*;
+
+import java.util.Map;
 
 public class Server {
 
@@ -24,16 +24,37 @@ public class Server {
         ApiHandler handler = new ApiHandler(clearService, gameService, authService);
 
 
-        javalin = Javalin.create(config -> config.staticFiles.add("web"));
-        // clear db
-        javalin.delete("/db", handler::clear);
-        javalin.post("/user", handler::register);
+        javalin = Javalin.create(config -> config.staticFiles.add("web"))
+                .delete("/db", handler::clear)
+                .post("/user", handler::register)
+                .exception(BadRequestException.class, (e, ctx) -> {
+                    returnException(e, ctx, 400);
+                })
+                .exception(AlreadyTakenException.class, (e, ctx) -> {
+                    returnException(e, ctx, 403);
+                })
+                .exception(Exception.class, (e, ctx) -> {
+                    returnException(e, ctx, 500);
+                });
+
+
 
     }
 
     public int run(int desiredPort) {
         javalin.start(desiredPort);
         return javalin.port();
+    }
+
+    private void returnException (Exception e, Context context, int status) {
+        var body = new Gson().toJson(Map.of("message", String.format("Error: %s", e.getMessage()), "success", false));
+        context.status(status);
+        context.json(body);
+    }
+
+    private void notFound(Context context) {
+        String msg = String.format("[%s] %s not found", context.method(), context.path());
+        returnException(new Exception(msg), context, 404);
     }
 
     public void stop() {
