@@ -28,14 +28,7 @@ public class ApiHandler {
                 .result("{}");
     }
 
-    private void showError(Context ctx, int status, String message) {
-        ctx.status(status)
-                .contentType("application/json")
-                .result(gson.toJson(Map.of("message", message)));
-    }
-
     public void register(Context ctx) throws Exception {
-        try {
             UserData registerRequest = gson.fromJson(ctx.body(), UserData.class);
 
             AuthData result = authService.register(registerRequest);
@@ -43,15 +36,5 @@ public class ApiHandler {
             ctx.status(200)
                     .contentType("application/json")
                     .result(gson.toJson(result));
-        }
-        catch (BadRequestException e){
-            showError(ctx, 400, "Error: bad request");
-        }
-        catch (AlreadyTakenException e){
-            showError(ctx, 403, "Error: already taken");
-        }
-        catch (Exception _){
-            showError(ctx, 500, "Error: ");
-        }
     }
 }
