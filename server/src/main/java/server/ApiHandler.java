@@ -1,10 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import io.javalin.http.Context;
-import model.AuthData;
-import model.LoginRequest;
-import model.UserData;
+import model.*;
 import server.services.*;
 import java.util.Map;
 
@@ -56,5 +55,18 @@ public class ApiHandler {
         ctx.status(200)
                 .contentType("application/json")
                 .result("{}");
+    }
+
+    public void createGame(Context ctx) {
+        String authToken = ctx.header("authorization");
+        CreateGameRequest request = gson.fromJson(ctx.body(), CreateGameRequest.class);
+        String name = request.gameName();
+
+        GameData gameData = gameService.createGame(authToken, name);
+        var response = Map.of("gameID", gameData.gameID());
+
+        ctx.status(200)
+                .contentType("application/json")
+                .result(gson.toJson(response));
     }
 }

@@ -19,7 +19,7 @@ public class Server {
 
         AuthService authService = new AuthService(users, auth);
         ClearService clearService = new ClearService(auth, games, users);
-        GamesService gameService = new GamesService(games, users);
+        GamesService gameService = new GamesService(games, users, auth);
 
         ApiHandler handler = new ApiHandler(clearService, gameService, authService);
 
@@ -29,6 +29,7 @@ public class Server {
                 .post("/user", handler::register)
                 .post("/session", handler::login)
                 .delete("/session", handler::logout)
+                .post("/game", handler::createGame)
                 .exception(BadRequestException.class, (e, ctx) -> {
                     returnException(e, ctx, 400);
                 })
