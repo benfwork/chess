@@ -30,6 +30,35 @@ public class GameDAO {
         return null;
     }
 
+    public GameData getGameById(int gameId) {
+        int index = getGameIdx(gameId);
+
+        if (index == -1) {
+            return null;
+        }
+
+        return games.get(index);
+    }
+
+    public int getGameIdx(int gameId){
+        for (var game : games){
+            if (game.gameID() == gameId){
+                return games.indexOf(game);
+            }
+        }
+        return -1;
+    }
+
+    public void updateGame(GameData updated) throws DataAccessException {
+        int index = getGameIdx(updated.gameID());
+
+        if (index == -1) {
+            throw new DataAccessException("Cannot update game that does not exist");
+        }
+
+        games.set(index, updated);
+    }
+
     public void createGame(String gameName){
         var newGame = new GameData(generateGameId(), null, null, gameName, new ChessGame());
         games.add(newGame);

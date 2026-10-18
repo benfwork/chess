@@ -30,6 +30,7 @@ public class Server {
                 .post("/session", handler::login)
                 .delete("/session", handler::logout)
                 .post("/game", handler::createGame)
+                .put("/game", handler::joinGame)
                 .exception(BadRequestException.class, (e, ctx) -> {
                     returnException(e, ctx, 400);
                 })

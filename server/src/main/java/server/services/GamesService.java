@@ -1,8 +1,11 @@
 package server.services;
 
+import chess.ChessGame;
 import model.AuthData;
 import model.GameData;
+import org.jetbrains.annotations.NotNull;
 import server.dataaccess.AuthDAO;
+import server.dataaccess.DataAccessException;
 import server.dataaccess.GameDAO;
 import server.dataaccess.UserDAO;
 
@@ -34,6 +37,44 @@ public class GamesService {
         games.createGame(gameName);
 
         return games.getGame(gameName);
+    }
+
+    public void joinGame(String authToken, int gameId, ChessGame.TeamColor playerColor) throws DataAccessException {
+        AuthData user = auth.getAuth(authToken);
+        if (user == null) {
+            throw new UnauthorizedException("Error: unauthorized");
+        }
+
+        if (playerColor == null) {
+            throw new BadRequestException("Error: bad request");
+        }
+
+        GameData currentGame = games.getGameById(gameId);
+        if (currentGame == null) {
+            throw new BadRequestException("Error: bad request");
+        }
+
+        GameData updated = getUpdated(playerColor, currentGame, user);
+
+        games.updateGame(updated);
+    }
+
+    @NotNull
+    private static GameData getUpdated(ChessGame.TeamColor playerColor, GameData current, AuthData user) {
+        boolean isWhite = playerColor == ChessGame.TeamColor.WHITE;
+        String occupantUsername = isWhite ? current.whiteUsername() : current.blackUsername();
+
+        if (occupantUsername != null) {
+            throw new AlreadyTakenException("Error: already taken");
+        }
+
+        return new GameData(
+                current.gameID(),
+                isWhite ? user.username() : current.whiteUsername(),
+                isWhite ? current.blackUsername() : user.username(),
+                current.gameName(),
+                current.game()
+        );
     }
 
 }

@@ -1,9 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import io.javalin.http.Context;
 import model.*;
+import server.dataaccess.DataAccessException;
 import server.services.*;
 import java.util.Map;
 
@@ -68,5 +68,19 @@ public class ApiHandler {
         ctx.status(200)
                 .contentType("application/json")
                 .result(gson.toJson(response));
+    }
+
+    public void joinGame(Context ctx) throws DataAccessException {
+        String authToken = ctx.header("authorization");
+        JoinGameRequest request = gson.fromJson(ctx.body(), JoinGameRequest.class);
+
+        var playerColor = request.playerColor();
+        var gameId = request.gameID();
+
+        gameService.joinGame(authToken, gameId, playerColor);
+
+        ctx.status(200)
+                .contentType("application/json")
+                .result("{}");
     }
 }

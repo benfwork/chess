@@ -2,10 +2,10 @@ package server.dataaccess;
 
 import model.UserData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class UserDAO {
-    private ArrayList<UserData> users;
+    private HashSet<UserData> users;
 
     public UserData getUser(String username) {
         for (var user : users){
@@ -20,11 +20,11 @@ public class UserDAO {
         users.add(userData);
     }
 
-    public void setUsers(ArrayList<UserData> users) {
+    public void setUsers(HashSet<UserData> users) {
         this.users = users;
     }
 
     public void clearUserData(){
-        setUsers(new ArrayList<UserData>());
+        setUsers(new HashSet<UserData>());
     }
 }
