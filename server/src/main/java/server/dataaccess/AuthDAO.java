@@ -5,13 +5,17 @@ import model.AuthData;
 import java.util.HashSet;
 
 public class AuthDAO {
-    private HashSet<AuthData> AuthInfo;
+    private HashSet<AuthData> authInfo;
 
     public AuthDAO() {
     }
 
+    public void addAuth(AuthData authData){
+        authInfo.add(authData);
+    }
+
     public void setAuthInfo(HashSet<AuthData> authInfo) {
-        AuthInfo = authInfo;
+        this.authInfo = authInfo;
     }
 
     public void clearAuthData(){

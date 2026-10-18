@@ -6,6 +6,8 @@ import server.dataaccess.AuthDAO;
 import server.dataaccess.DataAccessException;
 import server.dataaccess.UserDAO;
 
+import java.util.UUID;
+
 public class AuthService {
     private final UserDAO users;
     private final AuthDAO auth;
@@ -15,14 +17,25 @@ public class AuthService {
         this.auth = auth;
     }
 
+    public static String generateToken(){
+        return UUID.randomUUID().toString();
+    }
+
     public AuthData register(UserData request) throws Exception {
-        if (request == null || request.username() == null | request.password() == null || request.email() == null){
-            throw new Exception("Error: bad request");
+        if (request == null || request.username() == null || request.password() == null || request.email() == null){
+            throw new BadRequestException("Error: bad request");
         }
 
         if (users.getUser(request.username()) != null){
-            throw new Exception("Error: Already taken");
+            throw new AlreadyTakenException("Error: Already taken");
         }
+
+        users.createUser(request);
+
+        String authToken = generateToken();
+        AuthData authData = new AuthData(authToken, request.username());
+
+        auth.addAuth(authData);
 
         return authData;
     }

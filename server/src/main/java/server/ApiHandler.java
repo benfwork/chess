@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import io.javalin.http.Context;
+import model.AuthData;
 import model.UserData;
 import server.dataaccess.UserDAO;
 import server.services.AuthService;
@@ -32,8 +33,10 @@ public class ApiHandler {
     public void register(Context ctx) throws Exception {
         UserData registerRequest = gson.fromJson(ctx.body(), UserData.class);
 
-        var result = authService.register(registerRequest);
+        AuthData result = authService.register(registerRequest);
 
-
+        ctx.status(200)
+                .contentType("application/json")
+                .result(gson.toJson(result));
     }
 }

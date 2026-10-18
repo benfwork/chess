@@ -16,6 +16,10 @@ public class UserDAO {
         return null;
     }
 
+    public void createUser(UserData userData){
+        users.add(userData);
+    }
+
     public void setUsers(ArrayList<UserData> users) {
         this.users = users;
     }
