@@ -9,6 +9,7 @@ import server.dataaccess.AuthDAO;
 import server.dataaccess.UserDAO;
 import server.services.AlreadyTakenException;
 import server.services.AuthService;
+import server.services.BadRequestException;
 import server.services.UnauthorizedException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,5 +63,31 @@ public class AuthServiceTests {
         LoginRequest request = new LoginRequest("jimmy", "wrongpwd");
 
         assertThrows(UnauthorizedException.class, () -> service.login(request));
+    }
+
+    @Test
+    public void loginNull() {
+        assertThrows(BadRequestException.class,
+                () -> service.login(null));
+
+        assertThrows(BadRequestException.class,
+                () -> service.login(new LoginRequest(null, "password")));
+
+        assertThrows(BadRequestException.class,
+                () -> service.login(new LoginRequest("bob", null)));
+    }
+
+    @Test
+    public void registerNull() {
+        assertThrows(BadRequestException.class, () -> service.register(null));
+
+        assertThrows(BadRequestException.class, () -> service
+                .register(new UserData(null, "password", "bob@example.com")));
+
+        assertThrows(BadRequestException.class, () -> service.register(
+                        new UserData("bob", null, "bob@example.com")));
+
+        assertThrows(BadRequestException.class, () -> service.register(
+                        new UserData("bob", "password", null)));
     }
 }
