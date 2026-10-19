@@ -3,8 +3,8 @@ package server;
 import com.google.gson.Gson;
 import io.javalin.*;
 import io.javalin.http.Context;
-import server.dataaccess.*;
-import server.services.*;
+import dataaccess.*;
+import service.*;
 
 import java.util.Map;
 

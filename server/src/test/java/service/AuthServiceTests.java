@@ -5,12 +5,8 @@ import model.LoginRequest;
 import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.UserDAO;
-import server.services.AlreadyTakenException;
-import server.services.AuthService;
-import server.services.BadRequestException;
-import server.services.UnauthorizedException;
+import dataaccess.AuthDAO;
+import dataaccess.UserDAO;
 
 import static org.junit.jupiter.api.Assertions.*;
 

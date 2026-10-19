@@ -1,14 +1,14 @@
-package server.services;
+package service;
 
 import chess.ChessGame;
 import model.AuthData;
 import model.GameData;
 import model.GameResponse;
 import org.jetbrains.annotations.NotNull;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.DataAccessException;
-import server.dataaccess.GameDAO;
-import server.dataaccess.UserDAO;
+import dataaccess.AuthDAO;
+import dataaccess.DataAccessException;
+import dataaccess.GameDAO;
+import dataaccess.UserDAO;
 
 import java.util.ArrayList;
 import java.util.HashSet;

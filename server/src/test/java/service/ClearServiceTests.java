@@ -3,10 +3,9 @@ package service;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.Test;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.GameDAO;
-import server.dataaccess.UserDAO;
-import server.services.ClearService;
+import dataaccess.AuthDAO;
+import dataaccess.GameDAO;
+import dataaccess.UserDAO;
 
 import static org.junit.jupiter.api.Assertions.*;
 

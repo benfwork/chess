@@ -3,8 +3,8 @@ package server;
 import com.google.gson.Gson;
 import io.javalin.http.Context;
 import model.*;
-import server.dataaccess.DataAccessException;
-import server.services.*;
+import dataaccess.DataAccessException;
+import service.*;
 import java.util.Map;
 
 public class ApiHandler {

@@ -1,11 +1,11 @@
-package server.services;
+package service;
 
 import model.AuthData;
 import model.LoginRequest;
 import model.UserData;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.DataAccessException;
-import server.dataaccess.UserDAO;
+import dataaccess.AuthDAO;
+import dataaccess.DataAccessException;
+import dataaccess.UserDAO;
 
 import java.util.Objects;
 import java.util.UUID;

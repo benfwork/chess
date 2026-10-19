@@ -6,11 +6,10 @@ import model.GameData;
 import model.GameResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.DataAccessException;
-import server.dataaccess.GameDAO;
-import server.dataaccess.UserDAO;
-import server.services.GamesService;
+import dataaccess.AuthDAO;
+import dataaccess.DataAccessException;
+import dataaccess.GameDAO;
+import dataaccess.UserDAO;
 
 import java.util.List;
 

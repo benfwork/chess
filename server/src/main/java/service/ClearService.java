@@ -1,7 +1,7 @@
-package server.services;
-import server.dataaccess.AuthDAO;
-import server.dataaccess.GameDAO;
-import server.dataaccess.UserDAO;
+package service;
+import dataaccess.AuthDAO;
+import dataaccess.GameDAO;
+import dataaccess.UserDAO;
 
 public class ClearService {
     private final AuthDAO auth;
