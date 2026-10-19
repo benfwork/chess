@@ -60,11 +60,6 @@ public class Server {
         context.json(body);
     }
 
-    private void notFound(Context context) {
-        String msg = String.format("[%s] %s not found", context.method(), context.path());
-        returnException(new Exception(msg), context, 404);
-    }
-
     public void stop() {
         javalin.stop();
     }
