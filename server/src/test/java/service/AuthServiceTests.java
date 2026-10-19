@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.dataaccess.AuthDAO;
 import server.dataaccess.UserDAO;
+import server.services.AlreadyTakenException;
 import server.services.AuthService;
+import server.services.UnauthorizedException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,9 +40,27 @@ public class AuthServiceTests {
     }
 
     @Test
+    public void registerRejectsExistingUsername() {
+        service.register(new UserData("alice", "password", "alice@example.com"));
+        UserData duplicate = new UserData("alice", "different-password", "other@example.com");
+
+        assertThrows(AlreadyTakenException.class, () -> service.register(duplicate));
+    }
+
+    @Test
     public void loginSuccess(){
+        service.register(new UserData("bob", "password", "bob@example.com"));
         LoginRequest request = new LoginRequest("bob", "password");
         AuthData result = service.login(request);
 
+        assertEquals(result, auth.getAuth(result.authToken()));
+    }
+
+    @Test
+    public void loginWrongPassword(){
+        service.register(new UserData("jimmy", "pwd", "j@gmail.com"));
+        LoginRequest request = new LoginRequest("jimmy", "wrongpwd");
+
+        assertThrows(UnauthorizedException.class, () -> service.login(request));
     }
 }
